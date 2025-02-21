@@ -1,0 +1,49 @@
+-- Create the database
+CREATE DATABASE internet_billing;
+
+-- Use the newly created database
+USE internet_billing;
+
+-- Create a table for customers
+CREATE TABLE customers (
+    customer_id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    address TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Create a table for subscription plans
+CREATE TABLE subscription_plans (
+    plan_id INT AUTO_INCREMENT PRIMARY KEY,
+    plan_name VARCHAR(100) NOT NULL,
+    speed VARCHAR(50) NOT NULL, -- Example: "100 Mbps"
+    price DECIMAL(10,2) NOT NULL,
+    duration INT NOT NULL CHECK (duration > 0) -- Duration in months
+);
+
+-- Create a table for customer subscriptions
+CREATE TABLE customer_subscriptions (
+    subscription_id INT AUTO_INCREMENT PRIMARY KEY,
+    customer_id INT,
+    plan_id INT,
+    start_date DATE NOT NULL,
+    end_date DATE NOT NULL,
+    status ENUM('Active', 'Expired', 'Cancelled') DEFAULT 'Active',
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    FOREIGN KEY (plan_id) REFERENCES subscription_plans(plan_id)
+);
+
+-- Create a table for payments
+CREATE TABLE payments (
+    payment_id INT AUTO_INCREMENT PRIMARY KEY,
+    subscription_id INT,
+    amount DECIMAL(10,2) NOT NULL,
+    payment_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    payment_method ENUM('Credit Card', 'PayPal', 'Bank Transfer', 'Cash') NOT NULL,
+    transaction_id VARCHAR(100) UNIQUE,
+    status ENUM('Pending', 'Completed', 'Failed') DEFAULT 'Pending',
+    FOREIGN KEY (subscription_id) REFERENCES customer_subscriptions(subscription_id)
+);
