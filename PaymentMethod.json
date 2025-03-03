@@ -1,0 +1,29 @@
+document.getElementById("payment-method-form").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    let formData = new FormData(this);
+    let paymentMethod = formData.get("payment_method");
+
+    // Save to Payment Entry Doctype via API
+    fetch('/api/resource/Payment Entry', {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+            "X-Frappe-CSRF-Token": "{{ frappe.session.csrf_token }}"
+        },
+        body: JSON.stringify({
+            payment_method: paymentMethod
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data && data.name) {
+            alert("Payment Method Saved: " + paymentMethod);
+            window.location.href = "/invoice";  // Redirect to Invoice page
+        } else {
+            alert("Error saving payment method.");
+        }
+    })
+    .catch(error => console.error("Error:", error));
+});
