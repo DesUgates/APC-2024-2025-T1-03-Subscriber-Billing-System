@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choose a Payment Method</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 400px;
+            margin: auto;
+        }
+        .payment-container {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background: #fff;
+            text-align: center;
+        }
+        .payment-title {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        .payment-description {
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        .payment-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            cursor: pointer;
+            background: #f9f9f9;
+        }
+        .payment-option input {
+            margin-right: 10px;
+        }
+        .payment-option img {
+            width: 50px;
+            height: auto;
+            margin-right: 10px;
+        }
+        .gcash-button {
+            width: 100%;
+            padding: 10px;
+            background: #0077ff;
+            color: #fff;
+            text-align: center;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        .gcash-button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h2 class="payment-title">Choose a Payment Method</h2>
+        <p class="payment-description">You will not be charged until you review this order on the next page.</p>
+        
+        <label class="payment-option">
+            <input type="radio" name="payment" id="gcash-radio">
+            <img src="/files/GCash_Logo.png" alt="GCash">
+            Pay with GCash
+        </label>
+        
+        <button class="gcash-button" id="continue-button" disabled>Continue</button>
+    </div>
+
+    <script>
+        let gcashRadio = document.getElementById("gcash-radio");
+        let continueButton = document.getElementById("continue-button");
+        let isChecked = false; // Track the state manually
+
+        gcashRadio.addEventListener("click", function(event) {
+            if (isChecked) {
+                event.preventDefault(); // Prevent default radio button behavior
+                gcashRadio.checked = false;
+                isChecked = false;
+            } else {
+                gcashRadio.checked = true;
+                isChecked = true;
+            }
+            continueButton.disabled = !gcashRadio.checked; // Enable/Disable button
+        });
+    </script>
+</body>
+</html>
