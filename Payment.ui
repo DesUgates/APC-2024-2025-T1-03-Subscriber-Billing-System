@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Billing Address</title>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Billing Address</h2>
+        <form id="payment-entry">
+            <div class="form-group">
+                <div><label>First Name*</label><input type="text" name="first_name" required></div>
+                <div><label>Middle Name*</label><input type="text" name="middle_name" required></div>
+                <div><label>Last Name*</label><input type="text" name="last_name" required></div>
+                <div><label>Email Address*</label><input type="email" name="email" required></div>
+                <div><label>Suffix</label><input type="text" name="suffix"></div>
+                <div><label>Phone No.*</label><input type="tel" name="phone_number" required></div>
+                <div><label>Occupation*</label><input type="text" name="occupation" required></div>
+                <div>
+                    <label>Gender*</label>
+                    <select name="gender" required>
+                        <option value="">Select</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div><label>Birthday*</label><input type="date" name="birthday" required></div>
+                <div><label>Street Address*</label><input type="text" name="street_address" required></div>
+                <div><label>City*</label><input type="text" name="city" required></div>
+                <div><label>Province*</label><input type="text" name="province" required></div>
+                <div><label>Postal Code*</label><input type="text" name="postal_code" required></div>
+            </div>
+
+            <button type="button" class="confirm-btn" id="confirm-btn" disabled onclick="redirectToPayment()">Confirm</button>
+
+        </form>
+    </div>
+
+    <script>
+        function checkFormCompletion() {
+            const form = document.getElementById('payment-entry');
+            const button = document.getElementById('confirm-btn');
+            button.disabled = !form.checkValidity(); // Enables the button only if the form is valid
+        }
+
+        document.getElementById('payment-entry').addEventListener('input', checkFormCompletion);
+
+        function redirectToPayment() {
+            window.location.href = 'https://digi.csf.ph/payment-method';
+        }
+    </script>
+
+</body>
+</html>
